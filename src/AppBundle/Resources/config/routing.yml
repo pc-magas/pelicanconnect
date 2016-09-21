@@ -1,0 +1,4 @@
+app_member:
+    resource: "@AppBundle/Resources/config/routing/member.php"
+    prefix:   /member
+

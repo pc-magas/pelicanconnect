@@ -1,0 +1,1 @@
+maildev --ip 127.0.0.1 --incoming-user=pc_mmagas@openmailbox.org --incoming-pass=1234
