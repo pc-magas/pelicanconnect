@@ -5,12 +5,13 @@ namespace AppBundle\Entity;
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Interfaces\ArrayAbleInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="schools")
  */
-class School 
+class School implements ArrayAbleInterface
 {
 	/**
 	 * @var int
@@ -111,5 +112,17 @@ class School
     public function getMembers()
     {
         return $this->members;
+    }
+    
+    /**
+     * 
+     * {@inheritDoc}
+     * @see \AppBundle\Interfaces\ArrayAbleInterface::toArray()
+     */
+    public function toArray()
+    {
+    	$array=['id'=>$id,'name'=>$name];
+    	    	
+    	return $array;
     }
 }

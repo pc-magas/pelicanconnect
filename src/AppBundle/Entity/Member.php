@@ -3,12 +3,13 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use AppBundle\Interfaces\ArrayAbleInterface;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="members")
  */
-class Member 
+class Member implements ArrayAbleInterface
 {
 	/**
 	 * @var int 
@@ -19,10 +20,16 @@ class Member
 	private $id;
 	
 	/**
+	 * @var string
    	 * @ORM\Column(type="string", length=20)
 	 */
 	private $email;
 	
+	/**
+	 * @var string
+	 * @ORM\Column(type="string", length=100)
+	 */
+	private $name;
 	
 	/**
 	 * @ORM\ManyToMany(targetEntity="School",mappedBy="members")
@@ -104,5 +111,47 @@ class Member
     public function getSchools()
     {
         return $this->schools;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     *
+     * @return Member
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+    
+    /**
+     * {@inheritDoc}
+     * @see \AppBundle\Interfaces\ArrayAbleInterface::toArray()
+     */
+    public function toArray()
+    {
+    	$array=['id'=>$this->getId(),'name'=>$this->getName(),'email'=>$this->getEmail(),'schools'=>array()];
+    	
+    	$schools=$this->getSchools()->getValues();
+    	
+    	foreach($schools as $school)
+    	{
+    		$array['schools'][]=$school->toArray();
+    	}
+    	
+    	return $array;
     }
 }

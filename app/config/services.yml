@@ -7,3 +7,14 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+
+
+#CRUD Managers
+  member_crud_manager:
+    class: AppBundle\Managers\CRUD\MemberManager
+    arguments: ['@doctrine.orm.default_entity_manager']
+    
+#Models
+  member_model:
+    class: AppBundle\Models\MembersModel
+    arguments: ["@member_crud_manager","@logger"]
