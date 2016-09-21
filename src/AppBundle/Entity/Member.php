@@ -12,31 +12,29 @@ use AppBundle\Interfaces\ArrayAbleInterface;
 class Member implements ArrayAbleInterface
 {
 	/**
-	 * @var int 
 	 * @ORM\Id
 	 * @ORM\Column(type="integer")
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
-	
+
 	/**
-	 * @var string
-   	 * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=100)
 	 */
 	private $email;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=100)
 	 */
 	private $name;
-	
+
 	/**
 	 * @ORM\ManyToMany(targetEntity="School",mappedBy="members")
 	 * @ORM\JoinTable(name="members_have_schools")
 	 */
 	private $schools;
-	
+
     /**
      * Constructor
      */
@@ -136,7 +134,7 @@ class Member implements ArrayAbleInterface
     {
         return $this->name;
     }
-    
+
     /**
      * {@inheritDoc}
      * @see \AppBundle\Interfaces\ArrayAbleInterface::toArray()
@@ -144,14 +142,14 @@ class Member implements ArrayAbleInterface
     public function toArray()
     {
     	$array=['id'=>$this->getId(),'name'=>$this->getName(),'email'=>$this->getEmail(),'schools'=>array()];
-    	
+
     	$schools=$this->getSchools()->getValues();
-    	
+
     	foreach($schools as $school)
     	{
     		$array['schools'][]=$school->toArray();
     	}
-    	
+
     	return $array;
     }
 }
