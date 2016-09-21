@@ -86,6 +86,7 @@ class Member implements ArrayAbleInterface
      */
     public function addSchool(\AppBundle\Entity\School $school)
     {
+    	$school->addMember($this);
         $this->schools[] = $school;
 
         return $this;

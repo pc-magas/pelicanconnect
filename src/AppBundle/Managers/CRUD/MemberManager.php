@@ -65,10 +65,13 @@ class MemberManager implements CrudManagerInterface
 		$member->setName($dataToAdd['name'])->setEmail($dataToAdd['email']);
 
 		$schoolRepository=$this->entityManager->getRepository('AppBundle:School');
+		$foundSchools=array();
 		foreach($dataToAdd['schools'] as $school)
 		{
 			$school=$schoolRepository->findOneById(intval($school));
 			$member->addSchool($school);
+
+			$foundSchools[]=$school;
 		}
 
 		$this->entityManager->persist($member);

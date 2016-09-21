@@ -20,24 +20,25 @@ class School implements ArrayAbleInterface
 	 * @ORM\GeneratedValue(strategy="AUTO")
 	 */
 	private $id;
-	
+
 	/**
 	 * @var string
 	 * @ORM\Column(type="string", length=200)
 	 */
 	private $name;
-	
+
 	/**
-	 * 
+	 *
 	 * @var unknown
 	 */
 	private $school_id;
-	
+
 	/**
 	 * @var unknown
 	 * @ORM\ManyToMany(targetEntity="Member", inversedBy="schools")
 	 */
 	private $members;
+
     /**
      * Constructor
      */
@@ -113,16 +114,16 @@ class School implements ArrayAbleInterface
     {
         return $this->members;
     }
-    
+
     /**
-     * 
+     *
      * {@inheritDoc}
      * @see \AppBundle\Interfaces\ArrayAbleInterface::toArray()
      */
     public function toArray()
     {
-    	$array=['id'=>$id,'name'=>$name];
-    	    	
+    	$array=['id'=>$this->getId(),'name'=>$this->getName()];
+
     	return $array;
     }
 }
