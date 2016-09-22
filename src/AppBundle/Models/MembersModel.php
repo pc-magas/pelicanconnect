@@ -70,6 +70,7 @@ class MembersModel
 
 		try
 		{
+			/** @var Members[] */
 			$members=$this->memberManager->search($searchParams,$sortParams,$page,$limit);
 			return StatusFactory::createStatusFromArrayAbleArray($members);
 		}

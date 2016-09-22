@@ -97,12 +97,12 @@ class MemberManager implements CrudManagerInterface
 	{
 		//TODO:Impplement Member Dellete if requested
 	}
-	
+
 	/**
-	 * 
+	 *
 	 * {@inheritDoc}
 	 * @see \AppBundle\Interfaces\CrudManagerInterface::search()
-	 * 
+	 *
 	 * @return Member[]
 	 */
 	public function search(array $searchParams, array $order , $page, $limit)
@@ -111,46 +111,49 @@ class MemberManager implements CrudManagerInterface
 		 * @var \Doctrine\Common\Persistence\ObjectRepository $queryBuilder
 		 */
 		$queryBuilder=$this->entityManager->createQueryBuilder();
-		
+
 		$queryBuilder=$queryBuilder->select('m')->from('AppBundle:Member','m');
-		
+
 		if(!empty($searchParams['name']))
 		{
-			$queryBuilder->where('m.name=:name')->setParam('name',$searchParams['name']);
+			$queryBuilder->andWhere('m.name LIKE :name')->setParameter('name','%'.$searchParams['name'].'%');
 		}
-		
+
 		if(!empty($searchParams['schools']))
 		{
 			if(!is_array($searchParams['schools']))
 			{
 				$searchParams['schools']=[$searchParams['schools']];
 			}
-			
+
 			foreach ($searchParams['schools'] as $school)
 			{
-				$queryBuilder->orWhere('m.school=:school')->setParam('school',$school);
+				$queryBuilder->orWhere('m.school=:school')->setParameter('school',$school);
 			}
 		}
-		
+
 		if(!empty($order))
 		{
 			if(isset($searchParams['name']))
 			{
-				$queryBuilder->addOrderBy('m.name',$searchParams['name']);
+				$queryBuilder->addOrderBy('m.name',$order['name']);
 			}
 		}
-		
-		if($limit>0)
+
+		if((int)$limit>0)
 		{
 			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
 		}
-		
-		/** 
-		 * @var Doctrine\ORM\Query $query
+
+
+		/**
+		 * @var Doctrine\ORM\Query
 		 */
 		$query=$queryBuilder->getQuery();
+
+		$queryString=$query->getDql();
+
 		$results=$query->getResult();
-		
 		return $results;
 	}
 }
