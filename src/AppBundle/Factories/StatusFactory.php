@@ -51,5 +51,28 @@ class StatusFactory
 		
 		return $status;
 	}
-	
+
+	/**
+	 * Create a Status from an array containing ArrayAble items
+	 * @param ArrayAbleInterface[] | null $arrayAble Sometimes May Given Null
+	 */
+	public static function createStatusFromArrayAbleArray($arrayAble)
+	{
+		$returnData=array();
+		
+		if(is_array($arrayAble))
+		{
+			foreach ($arrayAble as $key=>$item)
+			{
+				$returnData[$key]=$item->toArray();	
+			}
+		}
+		
+		$status=new ActionStatus();
+		
+		$status->setStatus(ActionStatus::STATUS_OK);
+		$status->setData($returnData);
+		
+		return $status;
+	}
 }

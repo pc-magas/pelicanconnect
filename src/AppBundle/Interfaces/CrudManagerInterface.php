@@ -2,6 +2,8 @@
 
 namespace AppBundle\Interfaces;
 
+use Doctrine\DBAL\Platforms\Keywords\OracleKeywords;
+
 interface CrudManagerInterface 
 {
 	/**
@@ -26,9 +28,18 @@ interface CrudManagerInterface
 	 * Method that performs any sort of serching
 	 * 
 	 * @param array $searchParams Parameters that needed to perform the search.
+	 * @param array $order Parameter that defines how the data should be ordered
 	 * @param int $page The page we want to fetch.
 	 * @param int $limit The limit that is needed in order to perform this task.
 	 * 
+	 * NOTE:
+	 * The values in $order param should be like this:
+	 * 
+	 * 'some_key' => ASC 
+	 * 
+	 * or
+	 * 
+	 * 'some_key' => DESC
 	 */
-	public function search(array $searchParams,$page,$limit);
+	public function search(array $searchParams, array $order ,$page,$limit);
 }
