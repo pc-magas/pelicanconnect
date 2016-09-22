@@ -126,10 +126,7 @@ class MemberManager implements CrudManagerInterface
 				$searchParams['schools']=[$searchParams['schools']];
 			}
 
-			foreach ($searchParams['schools'] as $school)
-			{
-				$queryBuilder->orWhere('m.school=:school')->setParameter('school',$school);
-			}
+			$queryBuilder->andWhere('m.schools IN ( Select s.id FROM AppBundle:Schools s WHERE s.id IN (:schools ) )')->setParameters(['schools'=>$searchParams['schools']]);
 		}
 
 		if(!empty($order))

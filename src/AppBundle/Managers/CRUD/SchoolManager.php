@@ -67,18 +67,46 @@ class SchoolManager implements CrudManagerInterface
 		// TODO: Auto-generated method stub
 	}
 
-
 	/**
-	 *
-	 * {@inheritdoc}
-	 *
+	 * {@inheritDoc}
 	 * @see \AppBundle\Interfaces\CrudManagerInterface::search()
-	 *
-	 *
 	 */
-	public function search(array $searchParams, $page, $limit)
+	public function search(array $searchParams, array $order, $page, $limit) 
 	{
-		// TODO: Auto-generated method stub
+		/**
+		 * @var \Doctrine\Common\Persistence\ObjectRepository $queryBuilder
+		 */
+		$queryBuilder=$this->entityManager->createQueryBuilder();
+		
+		$queryBuilder=$queryBuilder->select('m')->from('AppBundle:School','m');
+		
+		if(!empty($searchParams['name']))
+		{
+			$queryBuilder->andWhere('m.name LIKE :name')->setParameter('name','%'.$searchParams['name'].'%');
+		}
+		
+		if(!empty($order))
+		{
+			if(isset($searchParams['name']))
+			{
+				$queryBuilder->addOrderBy('m.name',$order['name']);
+			}
+		}
+		
+		if((int)$limit>0)
+		{
+			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
+		}
+				
+		/**
+		 * @var Doctrine\ORM\Query
+		 */
+		$query=$queryBuilder->getQuery();
+		
+		$queryString=$query->getDql();
+		
+		$results=$query->getResult();
+		return $results;
 	}
 
 
