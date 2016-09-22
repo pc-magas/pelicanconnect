@@ -97,4 +97,17 @@ class MemberManager implements CrudManagerInterface
 	{
 
 	}
+	
+	/**
+	 * 
+	 * {@inheritDoc}
+	 * @see \AppBundle\Interfaces\CrudManagerInterface::search()
+	 * 
+	 * @return Member
+	 */
+	public function search(array $searchParams, $page, $limit)
+	{
+		$queryBuilder=$this->entityManager->getRepository('AppBundle:Member');
+		
+	}
 }

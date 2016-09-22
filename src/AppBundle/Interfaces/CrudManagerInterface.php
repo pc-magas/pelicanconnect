@@ -21,4 +21,14 @@ interface CrudManagerInterface
 	 * @param array $changedData Alll the data we need in order to determine what are the entries we need to delete 
 	 */
 	public function delete(array $changedData);
+	
+	/**
+	 * Method that performs any sort of serching
+	 * 
+	 * @param array $searchParams Parameters that needed to perform the search.
+	 * @param int $page The page we want to fetch.
+	 * @param int $limit The limit that is needed in order to perform this task.
+	 * 
+	 */
+	public function search(array $searchParams,$page,$limit);
 }

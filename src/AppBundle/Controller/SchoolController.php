@@ -2,42 +2,32 @@
 
 namespace AppBundle\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-
-use AppBundle\Entity\Member;
-use AppBundle\Form\MemberType;
+use AppBundle\Models\SchoolModel;
 use AppBundle\Factories\ResponseFactory;
-use AppBundle\Models\MembersModel;
 
-/**
- * Member controller.
- */
-class MemberController extends Controller
+class SchoolController extends Controller
 {
-	
-	
+
 	/**
-	 * @Route("add/member",name="members_add")
+	 * @Route("add/schools",name="schools_add")
 	 * @Method("POST")
-	 * 
+	 *
 	 * @param Request $request The Http Request given
 	 */
 	public function add(Request $request)
 	{
 		$name=$request->get('name');
-		$email=$request->get('email');
-		$schools=$request->get('schools');
-		
-		/** @var MembersModel*/
-		$model=$this->get('member_model');
-		
-		$status=$model->add($name,$email,$schools);
-		
+
+		/** @var SchoolModel*/
+		$model=$this->get('school_model');
+
+		$status=$model->add($name);
+
 		return ResponseFactory::createResponseFromStatus($status);
 	}
-
 }
