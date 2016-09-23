@@ -16,7 +16,7 @@ use Monolog\Logger;
 class MembersModel
 {
 	/**
-	 * @var ParticipantManager
+	 * @var MemberManager
 	 */
 	private $memberManager;
 

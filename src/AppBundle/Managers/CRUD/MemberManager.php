@@ -126,7 +126,7 @@ class MemberManager implements CrudManagerInterface
 				$searchParams['schools']=[$searchParams['schools']];
 			}
 
-			$queryBuilder->andWhere('m.schools IN ( Select s.id FROM AppBundle:Schools s WHERE s.id IN (:schools ) )')->setParameters(['schools'=>$searchParams['schools']]);
+			$queryBuilder->join('m.schools','s')->andWhere('s.id IN (:schools)')->setParameters(['schools'=>$searchParams['schools']]);
 		}
 
 		if(!empty($order))
@@ -148,7 +148,7 @@ class MemberManager implements CrudManagerInterface
 		 */
 		$query=$queryBuilder->getQuery();
 
-		$queryString=$query->getDql();
+// 		$queryString=$query->getDql();
 
 		$results=$query->getResult();
 		return $results;

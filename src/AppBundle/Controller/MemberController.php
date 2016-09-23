@@ -53,10 +53,12 @@ class MemberController extends Controller
 		$schools=$request->get('schools');
 		$desc=$request->get('desc');
 		
+		var_dump($schools);
+		
 		/** @var MembersModel*/
 		$model=$this->get('member_model');
 		
-		$status=$model->search($name,$schools,$page,$desc);
+		$status=$model->search($name,$schools,$page,$limit,$desc);
 		
 		return ResponseFactory::createResponseFromStatus($status);
 	}
