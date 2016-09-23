@@ -66,12 +66,21 @@ class MemberManager implements CrudManagerInterface
 
 		$schoolRepository=$this->entityManager->getRepository('AppBundle:School');
 		$foundSchools=array();
-		foreach($dataToAdd['schools'] as $school)
+		
+		if(!empty($dataToAdd['schools']))
 		{
-			$school=$schoolRepository->findOneById(intval($school));
-			$member->addSchool($school);
-
-			$foundSchools[]=$school;
+			if(!is_array($dataToAdd['schools']))
+			{
+				$dataToAdd['schools']=[$dataToAdd['schools']];
+			}
+			
+			foreach($dataToAdd['schools'] as $school)
+			{
+				$school=$schoolRepository->findOneById(intval($school));
+				$member->addSchool($school);
+	
+				$foundSchools[]=$school;
+			}
 		}
 
 		$this->entityManager->persist($member);

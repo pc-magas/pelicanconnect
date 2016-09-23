@@ -35,9 +35,9 @@ class MembersModel
 	 * Function that perfmorms all the Adding
 	 * @param string $name The name of the participant
 	 * @param string $email The email of the participant
-	 * @param array $schools The fk of the schools
+	 * @param array | null $schools The fk of the schools
 	 */
-	public function add($name,$email,array $schools)
+	public function add($name,$email,$schools)
 	{
 		$dataToAdd=['name'=>$name,'email'=>$email,'schools'=>$schools];
 
