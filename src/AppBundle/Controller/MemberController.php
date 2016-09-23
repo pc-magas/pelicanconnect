@@ -53,8 +53,6 @@ class MemberController extends Controller
 		$schools=$request->get('schools');
 		$desc=$request->get('desc');
 		
-		var_dump($schools);
-		
 		/** @var MembersModel*/
 		$model=$this->get('member_model');
 		

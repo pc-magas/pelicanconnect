@@ -1,8 +1,63 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container-fluid">
- 		
+    <div class="container-fluid">   	
+       <div class="btn-group" role="group">
+            <button type="button" class="btn btn-default" data-bind="click:initAddMember">Add Member</button>
+           	<button type="button" class="btn btn-default" >Add School</button>
+       </div>
+         
+        <!--  ko if:addingMember -->
+        	<div class="row bg-warning">
+        		<div  class="col-xs-12">
+                	<form class="form-group" method="POST" action="{{ path("members_add") }}" data-bind="with:memberToAdd">
+                		<span>
+                			Full Name:
+                			<input  class="form-control" type="text" data-bind="value:name" />
+                		</span>
+                		<span>
+                			Email:
+                			<input class="form-control" type="text" data-dind="value:email">
+                		</span>
+                		<div class="col-xs-12 row">
+                    		Schools:
+                    		<div class="btn-group">
+                                   <button type="button" class="btn btn-default dropdown-toggle"  data-bind="click:$parent.getShools" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      Select Schools <span class="caret"></span>
+                                   </button>
+                                   <ul id="dropdown" class="dropdown-menu">
+                                      <!-- ko foreach: $parent.schools -->
+                                         <li data-bind="click:function(){addToMember($parent);}"><a href="#" data-bind="text:name"></a></li>
+                                      <!-- /ko -->
+                                   </ul>
+                                </div>
+                            </div>    
+                           
+                    		<div class="col-xs-12 row">
+                            	<!-- ko foreach:schools -->
+                            		<span  class="label label-default" data-bind="click:function(){removeFromMember($parent);}"><span data-bind="text:name"></span></span>
+                            		<input type="hidden" name="schools[]" data-bind="value:id">
+                            	<!-- /ko -->
+                        	</div>
+                            	                		
+                	</form>
+            	</div>
+        	</div>
+        <!--  /ko  -->
+        
+    	<!-- ko foreach:members -->
+     		<div class="row bg-info">
+     			<div class="col-xs-12">
+         			<h3><span data-bind="text:name"></span></h3>
+         			Email: <span data-bind="text:email"></span><br>
+         			Shcools:
+         			<!-- ko foreach: schools -->
+         				<span  class="label label-default" data-bind="text:name"></span>
+         			<!-- /ko -->
+         			<br>
+     			</div>
+     		</div><br>
+ 		<!-- /ko -->
 	</div>
 {% endblock %}
 
@@ -11,7 +66,8 @@
 {% endblock %}
 
 {% block javascripts %}
-	<script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="  crossorigin="anonymous"></script>	\
+	<script src="https://code.jquery.com/jquery-3.1.0.js" integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="  crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.0/knockout-min.js"></script>
-	{{ asset('assets/script.js') }}
+	<script src="{{ asset('script.js') }}"></script>
 {% endblock %}
