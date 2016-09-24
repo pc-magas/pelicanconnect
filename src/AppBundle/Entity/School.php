@@ -6,6 +6,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Interfaces\ArrayAbleInterface;
+use AppBundle\Helpers\StringHelper;
 
 /**
  * @ORM\Entity
@@ -66,7 +67,7 @@ class School implements ArrayAbleInterface
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = StringHelper::removeHtml($name);
 
         return $this;
     }
