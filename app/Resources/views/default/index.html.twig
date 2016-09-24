@@ -87,7 +87,7 @@
         
         <div class="row" data-bind="with:filterManager">
         	<div class="col-xs-12">
-        		<h3>Filtered By (click on each filret to remove):</h3>
+        		<strong>Filtered By (click on each filter to remove):</strong><br>
         		<!-- ko foreach:filters -->
         			<span class="label label-default" data-bind="click:function(){$parent.remove($data)}"><span data-bind="text:name"></span></span>
         		<!-- /ko -->
