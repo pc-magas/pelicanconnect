@@ -10,8 +10,22 @@
                 <div class="btn-group" role="group">
                		<button type="button" class="btn btn-default" data-bind="click:initAddSchool">Add School</button>
                	</div>
+               	
+                <div class="btn-group" role="group">
+                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-bind="click:getShools">
+                      Filter By School
+                      <span class="caret"></span>
+                   </button>
+                   <ul id="dropdown" class="dropdown-menu">
+                   	 <!-- ko foreach: schools -->
+                       <li data-bind="click:function(){filterAction($parent.filterManager)}"><a href="#" data-bind="text:name"></a></li>
+                     <!-- /ko -->
+                   </ul>
+                </div>
            </div>
         </div>
+        
+
         
         <!--  ko if:addingMember -->
         	<div class="row bg-warning">
@@ -70,6 +84,15 @@
         		</div>
         	</div>
         <!-- /ko -->
+        
+        <div class="row" data-bind="with:filterManager">
+        	<div class="col-xs-12">
+        		<h3>Filtered By (click on each filret to remove):</h3>
+        		<!-- ko foreach:filters -->
+        			<span class="label label-default" data-bind="click:function(){$parent.remove($data)}"><span data-bind="text:name"></span></span>
+        		<!-- /ko -->
+        	</div>
+        </div>
         
     	<!-- ko foreach:members -->
      		<div class="row bg-info">
