@@ -5,6 +5,7 @@ namespace AppBundle\Managers\CRUD;
 use AppBundle\Interfaces\CrudManagerInterface;
 use AppBundle\Entity\School;
 use Doctrine\ORM\EntityManager;
+use AppBundle\Helpers\PaginatorHelper;
 
 class SchoolManager implements CrudManagerInterface
 {
@@ -93,17 +94,19 @@ class SchoolManager implements CrudManagerInterface
 			}
 		}
 		
-		if((int)$limit>0)
-		{
-			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
-		}
+// 		if((int)$limit>0)
+// 		{
+// 			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
+// 		}
 				
 		/**
 		 * @var Doctrine\ORM\Query
 		 */
 		$query=$queryBuilder->getQuery();
 		
-		$queryString=$query->getDql();
+		$query=PaginatorHelper::paginateQuery($query, $page, $limit);
+		
+// 		$queryString=$query->getDql();
 		
 		$results=$query->getResult();
 		return $results;

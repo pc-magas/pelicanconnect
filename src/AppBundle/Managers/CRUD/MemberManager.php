@@ -155,11 +155,6 @@ class MemberManager implements CrudManagerInterface
 
 		$limit=(int)$limit;
 		$page=(int)$page;
-// 		if((int)$limit>0)
-// 		{
-// 			$query->setFirstResult((int)$page)->setMaxResults((int)$limit);
-// 		}
-
 		$query=PaginatorHelper::paginateQuery($query, $page, $limit);
 		
 		$queryString=$query->getDql();
