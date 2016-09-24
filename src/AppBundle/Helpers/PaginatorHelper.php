@@ -11,6 +11,8 @@ class PaginatorHelper
 	 * @param Query $q
 	 * @param unknown $page
 	 * @param unknown $limit
+	 * 
+	 * @return Query
 	 */
 	public static function paginateQuery(Query $q,$page,$limit)
 	{
@@ -19,8 +21,9 @@ class PaginatorHelper
 		
 		$page=$page*$limit;
 		
+		$q->setFirstResult((int)$page)->setMaxResults((int)$limit);
 		
-		
+		return $q;
 	}
 	
 }
