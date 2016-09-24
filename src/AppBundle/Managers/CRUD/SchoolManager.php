@@ -88,25 +88,23 @@ class SchoolManager implements CrudManagerInterface
 		
 		if(!empty($order))
 		{
-			if(isset($searchParams['name']))
+			if(isset($order['name']))
 			{
 				$queryBuilder->addOrderBy('m.name',$order['name']);
 			}
 		}
 		
-// 		if((int)$limit>0)
-// 		{
-// 			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
-// 		}
-				
+
 		/**
 		 * @var Doctrine\ORM\Query
 		 */
 		$query=$queryBuilder->getQuery();
 		
+		/**
+		 * @var Doctrine\ORM\Query
+		 */
 		$query=PaginatorHelper::paginateQuery($query, $page, $limit);
 		
-// 		$queryString=$query->getDql();
 		
 		$results=$query->getResult();
 		return $results;

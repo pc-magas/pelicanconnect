@@ -58,6 +58,9 @@ class StatusFactory
 	 */
 	public static function createStatusFromArrayAbleArray($arrayAble)
 	{
+		$status=new ActionStatus();
+		
+		
 		$returnData=array();
 		
 		if(is_array($arrayAble))
@@ -67,9 +70,7 @@ class StatusFactory
 				$returnData[$key]=$item->toArray();	
 			}
 		}
-		
-		$status=new ActionStatus();
-		
+			
 		$status->setStatus(ActionStatus::STATUS_OK);
 		$status->setData($returnData);
 		

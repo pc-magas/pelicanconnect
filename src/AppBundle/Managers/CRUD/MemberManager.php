@@ -152,7 +152,7 @@ class MemberManager implements CrudManagerInterface
 
 		if(!empty($order))
 		{
-			if(isset($searchParams['name']))
+			if(isset($order['name']))
 			{
 				$queryBuilder->addOrderBy('m.name',$order['name']);
 			}
