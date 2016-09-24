@@ -8,6 +8,7 @@ use AppBundle\Factories\ExceptionFactory;
 use Doctrine\ORM\EntityManager;
 use AppBundle\Entity\Member;
 use AppBundle\Helpers\PaginatorHelper;
+use AppBundle\Exceptions\InvalidParamException;
 
 /**
  * @author pcmagas
@@ -41,6 +42,7 @@ class MemberManager implements CrudManagerInterface
 	 * 'email': string  For the participant's email
 	 * 'schools': array That must at least One integer value that is the foreighn key for the School
 	 *
+	 * @throws InvalidArgumentException
 	 * @return Member
 	 */
 	public function add(array $dataToAdd)
@@ -63,7 +65,16 @@ class MemberManager implements CrudManagerInterface
 
 		$member=new Member();
 
-		$member->setName($dataToAdd['name'])->setEmail($dataToAdd['email']);
+		try
+		{
+			$member->setName($dataToAdd['name'])->setEmail($dataToAdd['email']);
+		}
+		catch(InvalidParamException $i)
+		{
+			throw $i;
+		}
+
+
 
 		$schoolRepository=$this->entityManager->getRepository('AppBundle:School');
 		$foundSchools=array();
@@ -156,7 +167,7 @@ class MemberManager implements CrudManagerInterface
 		$limit=(int)$limit;
 		$page=(int)$page;
 		$query=PaginatorHelper::paginateQuery($query, $page, $limit);
-		
+
 		$queryString=$query->getDql();
 
 		$results=$query->getResult();

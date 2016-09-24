@@ -4,6 +4,8 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use AppBundle\Interfaces\ArrayAbleInterface;
+use AppBundle\Helpers\StringHelper;
+use Symfony\Component\Routing\Exception\InvalidParameterException;
 
 /**
  * @ORM\Entity
@@ -62,8 +64,15 @@ class Member implements ArrayAbleInterface
      */
     public function setEmail($email)
     {
-        $this->email = $email;
-
+    	try 
+    	{
+        	$this->email = StringHelper::validateEmail($email);
+    	}
+    	catch(InvalidParamException $i)
+    	{
+    		throw $i;	
+    	}
+    	
         return $this;
     }
 
@@ -121,7 +130,7 @@ class Member implements ArrayAbleInterface
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $this->name = StringHelper::removeHtml($name);
 
         return $this;
     }
