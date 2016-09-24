@@ -66,19 +66,19 @@ class MemberManager implements CrudManagerInterface
 
 		$schoolRepository=$this->entityManager->getRepository('AppBundle:School');
 		$foundSchools=array();
-		
+
 		if(!empty($dataToAdd['schools']))
 		{
 			if(!is_array($dataToAdd['schools']))
 			{
 				$dataToAdd['schools']=[$dataToAdd['schools']];
 			}
-			
+
 			foreach($dataToAdd['schools'] as $school)
 			{
 				$school=$schoolRepository->findOneById(intval($school));
 				$member->addSchool($school);
-	
+
 				$foundSchools[]=$school;
 			}
 		}
@@ -146,18 +146,20 @@ class MemberManager implements CrudManagerInterface
 			}
 		}
 
-		if((int)$limit>0)
-		{
-			$queryBuilder->setFirstResult((int)$page)->setMaxResults($limit);
-		}
-
 
 		/**
 		 * @var Doctrine\ORM\Query
 		 */
 		$query=$queryBuilder->getQuery();
 
-// 		$queryString=$query->getDql();
+		$limit=(int)$limit;
+		$page=(int)$page;
+		if((int)$limit>0)
+		{
+			$query->setFirstResult((int)$page)->setMaxResults((int)$limit);
+		}
+
+		$queryString=$query->getDql();
 
 		$results=$query->getResult();
 		return $results;
